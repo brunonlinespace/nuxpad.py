@@ -38,7 +38,7 @@ The files in the "Main" branch are the latest and greatest. The files in the "Ar
 
 <strong>Current version: Version 46.</strong>
 - Fixed the search box style not to change with user "display font" but match the rest of the UI instead.
-- Rest of the change log in the "Archive" branch.
+- Rest of the change log in the "Archive" branch (https://github.com/brunonlinespace/nuxpad.py/tree/archive).
 
 <hr>
 <p>I thought this was a fun little project so I decided to share it in case you find it fun/useful too. You can help me make it better, but I do not plan to spend much time on this project unless it really does take off. I have no clue about python (yet?). I am also new in GitHub so please be kind to me :-P</p>
