@@ -7,7 +7,7 @@ Hello, world!
 I am NOT A PROGRAMMER. I simply had fun prompting Gemini to output all the python codes you will find in this repository.
 
 <b>OK, now about the concept?</b>
-I just wanted a very simple text editor, blending some features of Windows Notepad (notepad.exe) and Windows Wordpad (wordpad.exe), so basically you can:
+I just wanted a very simple text editor, blending some features of Windows Notepad (notepad.exe) and Windows Wordpad (wordpad.exe). With Nuxpad, you can basically:
 - "Open", "Save", and "Save As" text files
 - Change display font family, size, and style
 - Undo, redo, cut, copy, paste, and select all
