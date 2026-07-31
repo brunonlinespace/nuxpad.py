@@ -7,7 +7,15 @@ Hello, world!
 I am NOT A PROGRAMMER. I simply had fun prompting Gemini to output all the python codes you will find in this repository.
 
 <b>OK, now about the concept?</b>
-I just wanted a very simple text editor, blending some features of Windows Notepad (notepad.exe) and Windows Wordpad (wordpad.exe).
+I just wanted a very simple text editor, blending some features of Windows Notepad (notepad.exe) and Windows Wordpad (wordpad.exe), so basically you can:
+- "Open", "Save", and "Save As" text files
+- Change display font family, size, and style
+- Toggle word wrap on and off
+- Toggle line numbers on and off
+- Toggle light and dark modes
+- It will remember last configs
+- Add simple bullet lists
+- Search box (it's fast!)
 
 <img width="480" height="270" alt="Screenshot_20260731_135445" src="https://github.com/user-attachments/assets/7d8cb212-b9ba-493f-8e7d-95cbe11f6d4b" />
 
