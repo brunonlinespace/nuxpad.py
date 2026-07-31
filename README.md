@@ -1,5 +1,5 @@
 # nuxpad.py
-A python text editor for Linux/
+A very simple text editor for Linux written in python.
 
 Hello, world!
 
