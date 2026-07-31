@@ -35,8 +35,8 @@ The files in the "Main" branch are the latest and greatest. The files in the "Ar
 4. Alternatively, you can grant "executable" permissions to the file and launch it via your file manager.
 5. Have fun!
 
-<strong>Current version: Version 45.</strong>
-- Manually modified the headers to align with my other projects.
+<strong>Current version: Version 46.</strong>
+- Fixed the search box style not to change with user "display font" but match the rest of the UI instead.
 - Rest of the change log in the "Archive" branch.
 
 <hr>
