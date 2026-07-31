@@ -26,7 +26,7 @@ I just wanted a very simple text editor, blending some features of Windows Notep
 I thought... What about asking Gemini to code this for me just for fun? This is where it came up with the ".py" files you see. 
 
 <b>OK, now tell me about the files?</b>
-The files in the "Main" branch are the latest and greatest. The files in the "Archive" branch were previous versions. All the versions uploaded here represent the evolution of the concept, for you to have a look and audit, use and fork, and do as you well please (I think I put it under GPL3). All versions were tested only on Fedora 44 KDE. I did not test this on any other DEs or non-systemd systems. I did not test this on any Arch/Debian-derivative either.
+The files in the "Main" branch are the latest and greatest. The files in the "Archive" branch were previous versions. All the versions uploaded here represent the evolution of the concept, for you to have a look and audit, use and fork, and do as you well please (I think I put it under GPL3). All versions were tested only on Fedora 44 KDE. I did not test this on any other DEs or non-systemd systems. I did not test this on any Arch/Debian-derivative either. But because they are written in python, I believe they should work cross-platform.
 
 <b>OK, how do I run this?</b>
 1. Ensure you have the required dependencies: python3.
