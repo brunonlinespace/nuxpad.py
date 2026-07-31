@@ -31,13 +31,14 @@ The files in the "Main" branch are the latest and greatest. The files in the "Ar
 <b>OK, how do I run this?</b>
 1. Ensure you have the required dependencies: python3.
 2. Download the python file(s) you wish.
-3. On the terminal, type "python3" + the name of the file you want to try.
-4. Alternatively, you can grant "executable" permissions to the file and launch it via your file manager.
-5. Have fun!
+3. Ensure you're on the same directory of the file or navigate to it.
+4. On the terminal, launch it by typing "python3" + the name of the file you want to try.
+5. Alternatively, you can grant "executable" permissions to the file and launch it via your file manager.
+6. Have fun!
 
 <strong>Current version: Version 46.</strong>
 - Fixed the search box style not to change with user "display font" but match the rest of the UI instead.
 - Rest of the change log in the "Archive" branch.
 
 <hr>
-<p>I thought this was a fun little project so I decided to share it in case you find it fun/useful too. You can help me make it better, but I do not plan to spend much time on this project unless it really does take off, but I need the open-source collaboration because I am not a programmer and I have no clue about python (yet?). I am also new in GitHub so please be kind to me :-P</p>
+<p>I thought this was a fun little project so I decided to share it in case you find it fun/useful too. You can help me make it better, but I do not plan to spend much time on this project unless it really does take off. I have no clue about python (yet?). I am also new in GitHub so please be kind to me :-P</p>
