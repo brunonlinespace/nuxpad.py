@@ -15,6 +15,7 @@ I just wanted a very simple text editor, blending some features of Windows Notep
 - Toggle light and dark modes
 - It will remember last configs
 - Add simple bullet lists
+- There are line and character counters
 - Search box (it's fast!)
 
 <img width="480" height="270" alt="Screenshot_20260731_135445" src="https://github.com/user-attachments/assets/7d8cb212-b9ba-493f-8e7d-95cbe11f6d4b" />
