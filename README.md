@@ -10,6 +10,8 @@ I am NOT A PROGRAMMER. I simply had fun prompting Gemini to output all the pytho
 I just wanted a very simple text editor, blending some features of Windows Notepad (notepad.exe) and Windows Wordpad (wordpad.exe), so basically you can:
 - "Open", "Save", and "Save As" text files
 - Change display font family, size, and style
+- Undo, redo, cut, copy, paste, and select all
+- Use keyboard shortcuts
 - Toggle word wrap on and off
 - Toggle line numbers on and off
 - Toggle light and dark modes
