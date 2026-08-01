@@ -17,7 +17,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
 # nuxpad.py
-# Version: 46 (Search Style Fixed)
+# Version: 58.4 (Flexible Expanded In-line Search Bar)
 # ==============================================================================
 
 import os
@@ -35,8 +35,8 @@ class Nuxpad:
         self.load_preferences()
 
         # Window Setup
-        self.root.title("Untitled - Nuxpad v46")
         self.root.geometry("800x550")
+        self.update_title()
 
         # Base Font Configuration
         self.normal_font = font.Font(family=self.base_font_family, size=self.base_font_size, weight=self.base_font_weight, slant=self.base_font_slant)
@@ -44,13 +44,20 @@ class Nuxpad:
         # Consistent UI Font for menus, search box, and controls
         self.ui_font = font.Font(family="Arial", size=10)
 
-        # Toolbar Frame (Container for buttons) - Placed at the BOTTOM, bezel-less
+        # Toolbar Frame (Top Toolbar) - bezel-less
         self.toolbar = tk.Frame(self.root, bd=0, relief="flat")
-        self.toolbar.pack(side="bottom", fill="x", padx=5, pady=5)
+        self.toolbar.pack(side="top", fill="x", padx=5, pady=5)
 
         # Main Editor Container Frame
+        editor_padx = 0 if self.split_search else 0
+        editor_pady = 0 if self.split_search else 0
         self.editor_frame = tk.Frame(self.root, bd=0, relief="flat")
-        self.editor_frame.pack(side="top", fill="both", expand=True)
+        self.editor_frame.pack(side="top", fill="both", expand=True, padx=editor_padx, pady=editor_pady)
+
+        # Bottom Search Bar Frame - Placed below the editor (only used in split search layout)
+        self.top_search_frame = tk.Frame(self.root, bd=0, relief="flat")
+        if self.split_search:
+            self.top_search_frame.pack(side="bottom", fill="x", padx=5, pady=(0, 5))
 
         # Line Numbers Canvas (No border/highlight)
         self.line_numbers = tk.Canvas(self.editor_frame, width=45, bd=0, highlightthickness=0)
@@ -75,8 +82,12 @@ class Nuxpad:
         # Bind Core Shortcuts
         self.bind_shortcuts()
 
-        # Build Toolbar Components
-        self.create_toolbar()
+        # Build Toolbar & Search Components based on active layout preference
+        if self.split_search:
+            self.create_toolbar_split()
+            self.create_top_search()
+        else:
+            self.create_toolbar_inline()
 
         # Window close protocol handler
         self.root.protocol("WM_DELETE_WINDOW", self.exit_app)
@@ -87,10 +98,11 @@ class Nuxpad:
         self.update_status_counts()
 
     def load_preferences(self):
-        # Defaults
         self.is_dark_mode = False
         self.word_wrap = True
         self.show_line_numbers = True
+        self.show_counters = True
+        self.split_search = False
         self.base_font_family = "Arial"
         self.base_font_size = 11
         self.base_font_weight = "normal"
@@ -103,6 +115,8 @@ class Nuxpad:
                     self.is_dark_mode = data.get("dark_mode", False)
                     self.word_wrap = data.get("word_wrap", True)
                     self.show_line_numbers = data.get("show_line_numbers", True)
+                    self.show_counters = data.get("show_counters", True)
+                    self.split_search = data.get("split_search", False)
                     self.base_font_family = data.get("font_family", "Arial")
                     self.base_font_size = data.get("font_size", 11)
                     self.base_font_weight = data.get("font_weight", "normal")
@@ -116,6 +130,8 @@ class Nuxpad:
                 "dark_mode": self.is_dark_mode,
                 "word_wrap": self.word_wrap,
                 "show_line_numbers": self.show_line_numbers,
+                "show_counters": self.show_counters,
+                "split_search": self.split_search,
                 "font_family": self.base_font_family,
                 "font_size": self.base_font_size,
                 "font_weight": self.base_font_weight,
@@ -134,7 +150,64 @@ class Nuxpad:
         self.root.bind("<Control-f>", lambda event: self.focus_search())
         self.root.bind("<Control-a>", lambda event: self.select_all_text())
 
-    def create_toolbar(self):
+    def build_common_menus(self, parent_toolbar):
+        def create_menu_style_button(parent, text):
+            mb = tk.Menubutton(parent, text=text, relief="flat", bd=0, padx=6, pady=2, cursor="hand2", direction="below")
+            menu = tk.Menu(mb, tearoff=0)
+            mb.config(menu=menu)
+            mb.pack(side="left", padx=2, pady=2)
+            self.buttons.append(mb)
+            self.menus.append(menu)
+            return menu
+
+        def create_action_menubutton(parent, text, command):
+            mb = tk.Menubutton(parent, text=text, relief="flat", bd=0, padx=6, pady=2, cursor="hand2", direction="below")
+            mb.bind("<Button-1>", lambda e: command())
+            mb.pack(side="left", padx=2, pady=2)
+            self.buttons.append(mb)
+            return mb
+
+        # --- File Menu (Separators Removed) ---
+        file_menu = create_menu_style_button(parent_toolbar, "File ▾")
+        file_menu.add_command(label="📄  New               Ctrl+N", command=self.new_file)
+        file_menu.add_command(label="📂  Open              Ctrl+O", command=self.open_file)
+        file_menu.add_command(label="💾  Save              Ctrl+S", command=self.save_file)
+        file_menu.add_command(label="💾  Save As           Ctrl+Shift+S", command=self.save_as_file)
+        file_menu.add_command(label="🔠  Display Font...", command=self.open_font_dialog)
+
+        # --- Edit Menu (Separators Removed) ---
+        edit_menu = create_menu_style_button(parent_toolbar, "Edit ▾")
+        edit_menu.add_command(label="↶  Undo             Ctrl+Z", command=self.text_edit_undo)
+        edit_menu.add_command(label="↷  Redo             Ctrl+Y", command=self.text_edit_redo)
+        edit_menu.add_command(label="✂  Cut              Ctrl+X", command=self.text_cut)
+        edit_menu.add_command(label="📋  Copy            Ctrl+C", command=self.text_copy)
+        edit_menu.add_command(label="📌  Paste           Ctrl+V", command=self.text_paste)
+        edit_menu.add_command(label="🔤  Select All       Ctrl+A", command=self.select_all_text)
+
+        # --- Toggles Menu (Separators Removed) ---
+        toggles_menu = create_menu_style_button(parent_toolbar, "Toggles ▾")
+        
+        self.wrap_var = tk.BooleanVar(value=self.word_wrap)
+        self.linenum_var = tk.BooleanVar(value=self.show_line_numbers)
+        self.counters_var = tk.BooleanVar(value=self.show_counters)
+        self.split_var = tk.BooleanVar(value=self.split_search)
+
+        toggles_menu.add_checkbutton(label="Word Wrap", variable=self.wrap_var, command=self.toggle_word_wrap)
+        toggles_menu.add_checkbutton(label="Line Numbers", variable=self.linenum_var, command=self.toggle_line_numbers)
+        toggles_menu.add_checkbutton(label="Counters", variable=self.counters_var, command=self.toggle_counters)
+        toggles_menu.add_checkbutton(label="Split Search", variable=self.split_var, command=self.toggle_split_search)
+        toggles_menu.add_command(label="Dark / Light Mode", command=self.toggle_theme)
+
+        # --- Utility Toolbar Button ---
+        create_action_menubutton(parent_toolbar, "List", self.insert_bullet_point)
+
+        # --- Line and Character Count Status Label ---
+        self.status_label = tk.Label(parent_toolbar, text="Lines: 1   Chars: 0", relief="flat", bd=0, padx=6, pady=2)
+        if self.show_counters:
+            self.status_label.pack(side="left", padx=2, pady=2)
+        self.buttons.append(self.status_label)
+
+    def create_toolbar_inline(self):
         self.buttons = []
         self.menus = []
         self.separators = []
@@ -145,89 +218,54 @@ class Nuxpad:
         self.left_toolbar = tk.Frame(self.toolbar, bd=0, relief="flat")
         self.left_toolbar.pack(side="left", anchor="w")
 
-        # Right Frame for Search Box Container
+        # Right Frame for Search Box Container (Expands to fill available space dynamically up to the status label)
         self.right_toolbar = tk.Frame(self.toolbar, bd=0, relief="flat")
-        self.right_toolbar.pack(side="right", anchor="e")
+        self.right_toolbar.pack(side="right", fill="x", expand=True, padx=(10, 0), anchor="e")
 
-        # --- Uniform Menubutton Helper for Consistent Styling ---
-        def create_menu_style_button(parent, text):
-            mb = tk.Menubutton(parent, text=text, relief="flat", bd=0, padx=6, pady=2, cursor="hand2", direction="above")
-            menu = tk.Menu(mb, tearoff=0)
-            mb.config(menu=menu)
-            mb.pack(side="left", padx=2, pady=2)
-            self.buttons.append(mb)
-            self.menus.append(menu)
-            return menu
+        self.build_common_menus(self.left_toolbar)
 
-        def create_action_menubutton(parent, text, command):
-            mb = tk.Menubutton(parent, text=text, relief="flat", bd=0, padx=6, pady=2, cursor="hand2", direction="above")
-            mb.bind("<Button-1>", lambda e: command())
-            mb.pack(side="left", padx=2, pady=2)
-            self.buttons.append(mb)
-            return mb
-
-        # --- File Menu (Upward Arrow) ---
-        file_menu = create_menu_style_button(self.left_toolbar, "File ▴")
-        file_menu.add_command(label="📄  New               Ctrl+N", command=self.new_file)
-        file_menu.add_command(label="📂  Open              Ctrl+O", command=self.open_file)
-        file_menu.add_command(label="💾  Save              Ctrl+S", command=self.save_file)
-        file_menu.add_command(label="💾  Save As           Ctrl+Shift+S", command=self.save_as_file)
-        file_menu.add_separator()
-        file_menu.add_command(label="🔠  Display Font...", command=self.open_font_dialog)
-
-        # --- Edit Menu (Upward Arrow) ---
-        edit_menu = create_menu_style_button(self.left_toolbar, "Edit ▴")
-        edit_menu.add_command(label="↶  Undo             Ctrl+Z", command=self.text_edit_undo)
-        edit_menu.add_command(label="↷  Redo             Ctrl+Y", command=self.text_edit_redo)
-        edit_menu.add_separator()
-        edit_menu.add_command(label="✂  Cut              Ctrl+X", command=self.text_cut)
-        edit_menu.add_command(label="📋  Copy            Ctrl+C", command=self.text_copy)
-        edit_menu.add_command(label="📌  Paste           Ctrl+V", command=self.text_paste)
-        edit_menu.add_separator()
-        edit_menu.add_command(label="🔤  Select All       Ctrl+A", command=self.select_all_text)
-
-        # --- Toggles Menu (Upward Arrow) ---
-        toggles_menu = create_menu_style_button(self.left_toolbar, "Toggles ▴")
-        
-        self.wrap_var = tk.BooleanVar(value=self.word_wrap)
-        self.linenum_var = tk.BooleanVar(value=self.show_line_numbers)
-
-        toggles_menu.add_checkbutton(label="Word Wrap", variable=self.wrap_var, command=self.toggle_word_wrap)
-        toggles_menu.add_checkbutton(label="Line Numbers", variable=self.linenum_var, command=self.toggle_line_numbers)
-        toggles_menu.add_separator()
-        toggles_menu.add_command(label="Dark / Light Mode", command=self.toggle_theme)
-
-        # --- Separator Frame ---
-        sep = tk.Frame(self.left_toolbar, width=2, bd=0, relief="sunken")
-        sep.pack(side="left", fill="y", padx=6, pady=4)
-        self.separators.append(sep)
-
-        # --- Utility Toolbar Button ---
-        create_action_menubutton(self.left_toolbar, "List", self.insert_bullet_point)
-
-        # --- Restored Separator after List ---
-        sep2 = tk.Frame(self.left_toolbar, width=2, bd=0, relief="sunken")
-        sep2.pack(side="left", fill="y", padx=6, pady=4)
-        self.separators.append(sep2)
-
-        # --- Line and Character Count Status Label styled identically to buttons ---
-        self.status_label = tk.Label(self.left_toolbar, text="Lines: 1   Chars: 0", relief="flat", bd=0, padx=6, pady=2)
-        self.status_label.pack(side="left", padx=2, pady=2)
-        self.buttons.append(self.status_label)
-
-        # --- Browser-Style Integrated Search Box & Search Action Icon/Button Container ---
+        # --- Browser-Style Integrated Search Box & Search Action Icon Container ---
         self.search_container = tk.Frame(self.right_toolbar, relief="solid", bd=1)
-        self.search_container.pack(side="right", padx=2, pady=2)
+        self.search_container.pack(side="right", fill="x", expand=True, padx=2, pady=2)
         self.search_containers.append(self.search_container)
 
         self.search_var = tk.StringVar()
-        self.search_entry = tk.Entry(self.search_container, textvariable=self.search_var, relief="flat", bd=0, width=18, font=self.ui_font, highlightthickness=0)
-        self.search_entry.pack(side="left", padx=(4, 2), pady=2, fill="y")
+        self.search_entry = tk.Entry(self.search_container, textvariable=self.search_var, relief="flat", bd=0, font=self.ui_font, highlightthickness=0)
+        self.search_entry.pack(side="left", padx=(6, 4), pady=2, fill="both", expand=True)
         self.search_widgets.append(self.search_entry)
         self.search_entry.bind("<Return>", lambda event: self.find_text())
 
-        # Integrated search button / icon styled natively inside the search container frame
-        self.inline_search_btn = tk.Label(self.search_container, text="🔍", relief="flat", bd=0, padx=4, pady=0, cursor="hand2")
+        self.inline_search_btn = tk.Label(self.search_container, text="🔍", relief="flat", bd=0, padx=6, pady=0, cursor="hand2")
+        self.inline_search_btn.pack(side="right", fill="y")
+        self.inline_search_btn.bind("<Button-1>", lambda e: self.find_text())
+
+    def create_toolbar_split(self):
+        self.buttons = []
+        self.menus = []
+        self.separators = []
+
+        # Left-Aligned Frame for Menus & Toolbar Tools (Layout 53.2 split style)
+        self.left_toolbar = tk.Frame(self.toolbar, bd=0, relief="flat")
+        self.left_toolbar.pack(side="top", anchor="w")
+
+        self.build_common_menus(self.left_toolbar)
+
+    def create_top_search(self):
+        self.search_containers = []
+        self.search_widgets = []
+
+        # Search Container Frame at the Bottom
+        self.search_container = tk.Frame(self.top_search_frame, relief="solid", bd=1)
+        self.search_container.pack(side="left", fill="x", expand=True, padx=2, pady=2)
+        self.search_containers.append(self.search_container)
+
+        self.search_var = tk.StringVar()
+        self.search_entry = tk.Entry(self.search_container, textvariable=self.search_var, relief="flat", bd=0, font=self.ui_font, highlightthickness=0)
+        self.search_entry.pack(side="left", padx=(6, 4), pady=4, fill="both", expand=True)
+        self.search_widgets.append(self.search_entry)
+        self.search_entry.bind("<Return>", lambda event: self.find_text())
+
+        self.inline_search_btn = tk.Label(self.search_container, text="🔍 Find", relief="flat", bd=0, padx=8, pady=2, cursor="hand2")
         self.inline_search_btn.pack(side="right", fill="y")
         self.inline_search_btn.bind("<Button-1>", lambda e: self.find_text())
 
@@ -238,7 +276,6 @@ class Nuxpad:
         font_win.transient(self.root)
         font_win.grab_set()
 
-        # Match theme colors for dialog window
         dialog_bg = "#2d2d2d" if self.is_dark_mode else "#f0f0f0"
         dialog_fg = "#d4d4d4" if self.is_dark_mode else "#000000"
         widget_bg = "#1e1e1e" if self.is_dark_mode else "#ffffff"
@@ -246,12 +283,9 @@ class Nuxpad:
 
         font_win.config(bg=dialog_bg)
 
-        # Family Selection
         tk.Label(font_win, text="Font Family:", bg=dialog_bg, fg=dialog_fg, anchor="w").pack(fill="x", padx=15, pady=(15, 2))
         
         available_fonts = sorted(list(font.families()))
-        family_var = tk.StringVar(value=self.base_font_family)
-        
         family_frame = tk.Frame(font_win, bg=dialog_bg)
         family_frame.pack(fill="x", padx=15, pady=2)
         
@@ -269,11 +303,9 @@ class Nuxpad:
                 family_listbox.selection_set(idx)
                 family_listbox.see(idx)
 
-        # Size & Style Options Row
         options_frame = tk.Frame(font_win, bg=dialog_bg)
         options_frame.pack(fill="x", padx=15, pady=10)
 
-        # Size Frame
         size_frame = tk.Frame(options_frame, bg=dialog_bg)
         size_frame.pack(side="left", fill="x", expand=True)
         tk.Label(size_frame, text="Size:", bg=dialog_bg, fg=dialog_fg, anchor="w").pack(fill="x")
@@ -281,7 +313,6 @@ class Nuxpad:
         size_spin = tk.Spinbox(size_frame, from_=6, to=72, textvariable=size_var, width=6, bg=widget_bg, fg=widget_fg, buttonbackground=dialog_bg)
         size_spin.pack(fill="x", pady=2)
 
-        # Weight Frame
         weight_frame = tk.Frame(options_frame, bg=dialog_bg)
         weight_frame.pack(side="left", fill="x", expand=True, padx=10)
         tk.Label(weight_frame, text="Weight:", bg=dialog_bg, fg=dialog_fg, anchor="w").pack(fill="x")
@@ -291,7 +322,6 @@ class Nuxpad:
         weight_menu["menu"].config(bg=widget_bg, fg=widget_fg)
         weight_menu.pack(fill="x", pady=2)
 
-        # Slant Frame
         slant_frame = tk.Frame(options_frame, bg=dialog_bg)
         slant_frame.pack(side="left", fill="x", expand=True)
         tk.Label(slant_frame, text="Style:", bg=dialog_bg, fg=dialog_fg, anchor="w").pack(fill="x")
@@ -301,7 +331,6 @@ class Nuxpad:
         slant_menu["menu"].config(bg=widget_bg, fg=widget_fg)
         slant_menu.pack(fill="x", pady=2)
 
-        # Apply Action
         def apply_font_changes():
             try:
                 selected_indices = family_listbox.curselection()
@@ -355,6 +384,39 @@ class Nuxpad:
         else:
             self.line_numbers.pack_forget()
         self.save_preferences()
+
+    def toggle_counters(self):
+        self.show_counters = self.counters_var.get()
+        if self.show_counters:
+            self.status_label.pack(side="left", padx=2, pady=2)
+            self.update_status_counts()
+        else:
+            self.status_label.pack_forget()
+        self.save_preferences()
+
+    def toggle_split_search(self):
+        self.split_search = self.split_var.get()
+        self.save_preferences()
+        
+        for widget in self.toolbar.winfo_children():
+            widget.destroy()
+        for widget in self.top_search_frame.winfo_children():
+            widget.destroy()
+        
+        if self.split_search:
+            self.top_search_frame.pack(side="bottom", fill="x", padx=5, pady=(0, 5))
+            self.create_toolbar_split()
+            self.create_top_search()
+        else:
+            self.top_search_frame.pack_forget()
+            self.create_toolbar_inline()
+            
+        self.update_title()
+        self.apply_theme()
+        if self.show_line_numbers and not self.line_numbers.winfo_ismapped():
+            self.line_numbers.pack(side="left", fill="y")
+        self.update_line_numbers()
+        self.update_status_counts()
 
     def text_edit_undo(self):
         try:
@@ -425,6 +487,8 @@ class Nuxpad:
             i = self.text_area.index(f"{i}+1line")
 
     def update_status_counts(self):
+        if not self.show_counters:
+            return
         content = self.text_area.get("1.0", "end-1c")
         chars = len(content)
         lines = int(self.text_area.index("end-1c").split(".")[0])
@@ -448,9 +512,11 @@ class Nuxpad:
         self.update_status_counts()
 
     def update_title(self):
-        display_name = self.file_path if self.file_path else "Untitled"
         prefix = "*" if not self.content_saved else ""
-        self.root.title(f"{prefix}{display_name} - Nuxpad")
+        if self.file_path:
+            self.root.title(f"{prefix}{self.file_path} - Nuxpad")
+        else:
+            self.root.title(f"{prefix}Untitled - Nuxpad v58.4")
 
     def check_save_changes(self):
         if not self.content_saved:
@@ -591,8 +657,11 @@ class Nuxpad:
 
         self.root.config(bg=bg_color)
         self.toolbar.config(bg=bg_color)
+        if self.split_search:
+            self.top_search_frame.config(bg=bg_color)
         self.left_toolbar.config(bg=bg_color)
-        self.right_toolbar.config(bg=bg_color)
+        if not self.split_search and hasattr(self, 'right_toolbar'):
+            self.right_toolbar.config(bg=bg_color)
         self.editor_frame.config(bg=bg_color)
 
         self.text_area.config(
