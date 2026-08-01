@@ -21,7 +21,7 @@ I just wanted a very simple text editor, blending some features of Windows Notep
 - Add simple bullet lists
 - Search box (it's fast!)
 
-<img width="480" height="270" alt="Screenshot_20260731_135445" src="https://github.com/user-attachments/assets/7d8cb212-b9ba-493f-8e7d-95cbe11f6d4b" />
+<img width="480" height="270" alt="nuxpad-58" src="https://github.com/user-attachments/assets/5cc96135-6c05-4104-9754-fb6a468ffdea" />
 <p>Main version</p>
 
 <img width="480" height="270" alt="Screenshot_20260801_142721" src="https://github.com/user-attachments/assets/c33b234a-a18e-40fc-902e-a8699de37abb" />
