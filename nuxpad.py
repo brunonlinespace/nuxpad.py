@@ -17,7 +17,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
 # nuxpad.py
-# Version: 58.4 (Flexible Expanded In-line Search Bar)
+# Version: 58.5 (Patch to fix line numbers bug)
 # ==============================================================================
 
 import os
@@ -413,8 +413,12 @@ class Nuxpad:
             
         self.update_title()
         self.apply_theme()
-        if self.show_line_numbers and not self.line_numbers.winfo_ismapped():
+
+        # Ensure line numbers are correctly re-packed first inside editor_frame if enabled
+        self.line_numbers.pack_forget()
+        if self.show_line_numbers:
             self.line_numbers.pack(side="left", fill="y")
+
         self.update_line_numbers()
         self.update_status_counts()
 
@@ -516,7 +520,7 @@ class Nuxpad:
         if self.file_path:
             self.root.title(f"{prefix}{self.file_path} - Nuxpad")
         else:
-            self.root.title(f"{prefix}Untitled - Nuxpad v58.4")
+            self.root.title(f"{prefix}Untitled - Nuxpad v58.5")
 
     def check_save_changes(self):
         if not self.content_saved:
