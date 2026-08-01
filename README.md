@@ -22,6 +22,13 @@ I just wanted a very simple text editor, blending some features of Windows Notep
 - Search box (it's fast!)
 
 <img width="480" height="270" alt="Screenshot_20260731_135445" src="https://github.com/user-attachments/assets/7d8cb212-b9ba-493f-8e7d-95cbe11f6d4b" />
+Main version
+
+<img width="480" height="270" alt="Screenshot_20260801_141929" src="https://github.com/user-attachments/assets/828f47dd-1005-49a3-bbc5-e81f5ed88b23" />
+Special "In-line" Version
+
+<img width="480" height="270" alt="Screenshot_20260801_142022" src="https://github.com/user-attachments/assets/ff448ed0-9c70-48c6-818d-4f5268558869" />
+Special "Split" Version
 
 <b>OK, so what did I do?</b>
 I thought... What about asking Gemini to code this for me just for fun? This is where it came up with the ".py" files you see. 
@@ -38,7 +45,7 @@ The files in the "Main" branch are the latest and greatest. The files in the "Ar
 6. Have fun!
 
 <strong>Current version: Version 58.4.</strong>
-- This was a major update: In this version, you can select which layout you prefer: in-line search box or split to the bottom; there is also a new toggle to switch the line and character counters on and off; small visual revamp to remove all separators.
+- This was a major update: In this version, you can select which layout you prefer: in-line search box or search box split to the bottom; there is also a new toggle to switch the line and character counters on and off; small visual revamp to remove all separators.
 - Rest of the change log in the "Archive" branch (https://github.com/brunonlinespace/nuxpad.py/tree/archive).
 
 <hr>
