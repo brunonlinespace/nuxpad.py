@@ -21,5 +21,5 @@ Archived versions on the nuxpad.py (https://github.com/brunonlinespace/nuxpad.py
 - v48.3: Search Box now swapped to bottom and Toolbar is at the top. <b>This is the first base layout for v58.</b>
 - v48.2: Same code as 48.1 but separators removed: Search Box is top and Toolbar is down.
 - v48.1: Search Box now split to the top of the text area.
-- v47: Toggle added to switch line and number counters on and off. Search Box is in-line with Toolbar in down position.
+- v47: Toggle added to switch line and number counters on and off. Search Box remains in-line with Toolbar, in down position.
 - v46 (<b>committed as "Main"</b>): Fixed the search box style not to change with user "display font" but match the rest of the UI instead.
