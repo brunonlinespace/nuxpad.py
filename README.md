@@ -17,7 +17,7 @@ Archived versions on the nuxpad.py (https://github.com/brunonlinespace/nuxpad.py
 - v52.1-52.2: Second buggy attempt to toggle layout swap between in-line and split out Search Box.  
 - v51.1-51.3 Buggy attempts to introduce Drag & Drop features to open text files.
 - v50.1-50.3: Buggy attempts to toggle layout swap between Split Search Box and Toolbar: Top Toolbar / Bottom Search versus Bottom Toolbar / Top Search. 
-- v49.1-v49.4: First buggy attempt to toggle layout swap between in-line and split out Search Box.
+- v49.1-v49.4: First buggy attempt to toggle layout swap between in-line (v47) and split out Search Box (v48.1).
 - v48.3: Search Box now swapped to bottom and Toolbar is at the top. <b>This is the first base layout for v58s.</b>
 - v48.2: Same code as v48.1 but separators removed: Search Box is top and Toolbar is down.
 - v48.1: Search Box now split to the top of the text area.
