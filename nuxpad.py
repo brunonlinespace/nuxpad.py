@@ -17,11 +17,13 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
 # nuxpad.py
-# Version: 58.5 (Patch to fix line numbers bug)
+# Version: 58.6 (Added New Window Menu Option & Shortcut)
 # ==============================================================================
 
 import os
+import sys
 import json
+import subprocess
 import tkinter as tk
 from tkinter import filedialog, messagebox, font, Toplevel
 
@@ -144,6 +146,7 @@ class Nuxpad:
 
     def bind_shortcuts(self):
         self.root.bind("<Control-n>", lambda event: self.new_file())
+        self.root.bind("<Control-Shift-N>", lambda event: self.new_window())
         self.root.bind("<Control-o>", lambda event: self.open_file())
         self.root.bind("<Control-s>", lambda event: self.save_file())
         self.root.bind("<Control-S>", lambda event: self.save_as_file())
@@ -173,6 +176,7 @@ class Nuxpad:
         file_menu.add_command(label="📂  Open              Ctrl+O", command=self.open_file)
         file_menu.add_command(label="💾  Save              Ctrl+S", command=self.save_file)
         file_menu.add_command(label="💾  Save As           Ctrl+Shift+S", command=self.save_as_file)
+        file_menu.add_command(label="🪟  New Window        Ctrl+Shift+N", command=self.new_window)
         file_menu.add_command(label="🔠  Display Font...", command=self.open_font_dialog)
 
         # --- Edit Menu (Separators Removed) ---
@@ -520,7 +524,7 @@ class Nuxpad:
         if self.file_path:
             self.root.title(f"{prefix}{self.file_path} - Nuxpad")
         else:
-            self.root.title(f"{prefix}Untitled - Nuxpad v58.5")
+            self.root.title(f"{prefix}Untitled - Nuxpad v58.6")
 
     def check_save_changes(self):
         if not self.content_saved:
@@ -542,6 +546,13 @@ class Nuxpad:
             self.update_title()
             self.update_line_numbers()
             self.update_status_counts()
+        return "break"
+
+    def new_window(self):
+        try:
+            subprocess.Popen([sys.executable, os.path.abspath(__file__)])
+        except Exception as e:
+            messagebox.showerror("Error", f"Could not open new window:\n{e}")
         return "break"
 
     def open_file(self):
