@@ -22,13 +22,13 @@ I just wanted a very simple text editor, blending some features of Windows Notep
 - Search box (it's fast!)
 
 <img width="480" height="270" alt="Screenshot_20260731_135445" src="https://github.com/user-attachments/assets/7d8cb212-b9ba-493f-8e7d-95cbe11f6d4b" />
-Main version
+<p>Main version</p>
 
-<img width="480" height="270" alt="Screenshot_20260801_141929" src="https://github.com/user-attachments/assets/828f47dd-1005-49a3-bbc5-e81f5ed88b23" />
-Special "In-line" Version
+<img width="480" height="270" alt="Screenshot_20260801_142721" src="https://github.com/user-attachments/assets/c33b234a-a18e-40fc-902e-a8699de37abb" />
+<p>Special "In-Line" edition</p>
 
-<img width="480" height="270" alt="Screenshot_20260801_142022" src="https://github.com/user-attachments/assets/ff448ed0-9c70-48c6-818d-4f5268558869" />
-Special "Split" Version
+<img width="480" height="270" alt="Screenshot_20260801_142536" src="https://github.com/user-attachments/assets/cb757618-0002-4720-9279-06b66ed602b4" />
+<p>Special "Split" edition</p>
 
 <b>OK, so what did I do?</b>
 I thought... What about asking Gemini to code this for me just for fun? This is where it came up with the ".py" files you see. 
