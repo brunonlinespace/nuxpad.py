@@ -6,7 +6,7 @@ Archived versions on the nuxpad.py (https://github.com/brunonlinespace/nuxpad.py
 - v58.3: Bug in title bar fixed.
 - v58.2: Menu separators removed.
 - v58.1: Successful attempt to toggle layout change between v53.2 (in-line top) and v48.3 (toolbar top / search down)
-- v57s: Second buggy attempt to toggle 4 layout changes by mega merging v53.2 (in-line top), v53.1 (in-line down), v48.3 (toolbar top / search down), and v48.1 (toolbar down / search top).
+- v57s: Second buggy attempt to toggle 4 layout changes by mega merging v53.2 (in-line top), v53.1 (in-line down), v48.3 (toolbar top / search down), and v48.2 (toolbar down / search top).
 - v56s: First buggy attempt to toggle 4 layout changes by mega merge v55s: in-line top, in-line down, toolbar top / search down, toolbar down / search top.  
 - v55.2.1 & 55.2.2: Codes v53.1 (toolbar down + in-line search) and v53.2 (toolbar up + in-line search) combined with layout toggle. 
 - v55.1.1 & 55.1.2: Codes v48.2 (toolbar down / search top) and v48.3 (toolbar top / search down) combined with layout toggle.
