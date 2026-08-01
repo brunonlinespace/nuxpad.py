@@ -8,7 +8,8 @@ I am NOT A PROGRAMMER. I simply had fun prompting Gemini to output all the pytho
 
 <b>OK, now about the concept?</b>
 I just wanted a very simple text editor, blending some features of Windows Notepad (notepad.exe) and Windows Wordpad (wordpad.exe). With Nuxpad.py, you can basically:
-- "Open", "Save", and "Save As" text files
+- Open, Edit, Save, text files
+- Open a new instance of Nuxpad from the current program.
 - Change display font family, size, and style
 - Undo, redo, cut, copy, paste, and select all
 - Use keyboard shortcuts
