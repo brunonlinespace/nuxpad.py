@@ -2,7 +2,9 @@
 Archived versions on the nuxpad.py (https://github.com/brunonlinespace/nuxpad.py)
 
 <strong>Active version: check "Main" branch. Change log:</strong>
-- v58.4 (<b>committed as "Main"</b>): In-line Search Bar now expands throughout the toolbar.
+- v58.6 (<b>committed as "Main"</b>): New option to open a new instance of nuxpad.py as a "New Window" option in the File menu.
+- v58.5: Fixed a bug with line numbers.
+- v58.4: In-line Search Bar now expands throughout the toolbar.
 - v58.3: Bug in title bar fixed.
 - v58.2: Menu separators removed.
 - v58.1: Successful attempt to toggle layout change between v53.2 (in-line top) and v48.3 (toolbar top / search down)
