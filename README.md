@@ -13,7 +13,7 @@ Archived versions on the nuxpad.py (https://github.com/brunonlinespace/nuxpad.py
 - v54.2: Toolbar is now centred on top and Search Box is split to bottom.
 - v54.1: Same code as v48.2 but Toolbar is now centred on the screen.
 - v53.2: Toolbar with in-line Search Box now moved to top of text area. <b>This is the second base layout for v58s.</b>
-- v53.1: Same code as v47 (toolbar down + in-line search) but separators were removed.
+- v53.1: Same code as v47 (toolbar down + in-line search) but removed separators.
 - v52.1-52.2: Second buggy attempt to toggle layout swap between in-line and split out Search Box.  
 - v51.1-51.3 Buggy attempts to introduce Drag & Drop features to open text files.
 - v50.1-50.3: Buggy attempts to toggle layout swap between Split Search Box and Toolbar: Top Toolbar / Bottom Search versus Bottom Toolbar / Top Search. 
