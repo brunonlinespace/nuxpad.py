@@ -14,10 +14,11 @@ I just wanted a very simple text editor, blending some features of Windows Notep
 - Use keyboard shortcuts
 - Toggle word wrap on and off
 - Toggle line numbers on and off
+- Toggle line and character counters on and off
+- Toggle in-line vs split layout 
 - Toggle light and dark modes
 - It will remember last configs
 - Add simple bullet lists
-- There are line and character counters
 - Search box (it's fast!)
 
 <img width="480" height="270" alt="Screenshot_20260731_135445" src="https://github.com/user-attachments/assets/7d8cb212-b9ba-493f-8e7d-95cbe11f6d4b" />
@@ -36,8 +37,8 @@ The files in the "Main" branch are the latest and greatest. The files in the "Ar
 5. Alternatively, you can grant "executable" permissions to the file and launch it via your file manager.
 6. Have fun!
 
-<strong>Current version: Version 46.</strong>
-- Fixed the search box style not to change with user "display font" but match the rest of the UI instead.
+<strong>Current version: Version 58.4.</strong>
+- This was a major update: In this version, you can select which layout you prefer: in-line search box or split to the bottom; there is also a new toggle to switch the line and character counters on and off  
 - Rest of the change log in the "Archive" branch (https://github.com/brunonlinespace/nuxpad.py/tree/archive).
 
 <hr>
