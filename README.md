@@ -44,8 +44,8 @@ The files in the "Main" branch are the latest and greatest. The files in the "Ar
 5. Alternatively, you can grant "executable" permissions to the file and launch it via your file manager.
 6. Have fun!
 
-<strong>Current version: Version 58.4.</strong>
-- This was a major update: In this version, you can select which layout you prefer: in-line search box or search box split to the bottom; there is also a new toggle to switch the line and character counters on and off; small visual revamp to remove all separators.
+<strong>Current version: Version 58.5.</strong>
+- This was a major update: In this version, you can select which layout you prefer: in-line search box or search box split to the bottom; there is also a new toggle to switch the line and character counters on and off.
 - Rest of the change log in the "Archive" branch (https://github.com/brunonlinespace/nuxpad.py/tree/archive).
 
 <hr>
