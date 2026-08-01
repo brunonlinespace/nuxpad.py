@@ -38,7 +38,7 @@ The files in the "Main" branch are the latest and greatest. The files in the "Ar
 6. Have fun!
 
 <strong>Current version: Version 58.4.</strong>
-- This was a major update: In this version, you can select which layout you prefer: in-line search box or split to the bottom; there is also a new toggle to switch the line and character counters on and off  
+- This was a major update: In this version, you can select which layout you prefer: in-line search box or split to the bottom; there is also a new toggle to switch the line and character counters on and off; small visual revamp to remove all separators.
 - Rest of the change log in the "Archive" branch (https://github.com/brunonlinespace/nuxpad.py/tree/archive).
 
 <hr>
