@@ -1,4 +1,4 @@
-# nuxpad.py
+# nuxpad.py (legacy)
 A very simple text editor for Linux written in python.
 
 Hello, world!
