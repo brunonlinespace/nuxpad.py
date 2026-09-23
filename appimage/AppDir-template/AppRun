@@ -1,0 +1,21 @@
+#!/bin/sh
+HERE="$(dirname "$(readlink -f "$0")")"
+export APPDIR="$HERE"
+export PATH="$HERE/usr/bin:$PATH"
+
+case "${1:-}" in
+    --appimage-theme=dark)
+        export NUXPAD_APPIMAGE_THEME="dark"
+        shift
+        ;;
+    --appimage-theme=light)
+        export NUXPAD_APPIMAGE_THEME="light"
+        shift
+        ;;
+    --appimage-theme=system)
+        export NUXPAD_APPIMAGE_THEME="system"
+        shift
+        ;;
+esac
+
+exec "$HERE/usr/bin/nuxpad" "$@"

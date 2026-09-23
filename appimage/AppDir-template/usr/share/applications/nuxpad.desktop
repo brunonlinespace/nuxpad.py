@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Nuxpad 2
+GenericName=Text Editor
+Comment=Simple, fast and focused text editor
+Exec=nuxpad %F
+Icon=nuxpad
+Terminal=false
+Categories=Utility;TextEditor;
+MimeType=text/plain;
+StartupNotify=true
+StartupWMClass=nuxpad

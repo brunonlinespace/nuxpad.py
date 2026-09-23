@@ -1,0 +1,4 @@
+# Major versions are constrained; the exact resolved versions are recorded
+# in dist/Nuxpad-2.0.0-rc5.1-x86_64.build-python-lock.txt.
+PyInstaller>=6.21,<7
+PyQt6>=6.9,<7

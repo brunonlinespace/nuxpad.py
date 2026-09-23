@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="26"/>
+      <feOffset dy="20"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.48"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0" stop-color="#8f6817"/>
+      <stop offset=".45" stop-color="#ffe073"/>
+      <stop offset="1" stop-color="#a87719"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" x2="1">
+      <stop offset="0" stop-color="#79dc3d"/>
+      <stop offset="1" stop-color="#4aa72f"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="158" y="126" width="672" height="716" rx="102" fill="#2b2d2d" stroke="#080909" stroke-width="10"/>
+    <path d="M160 338H828" stroke="#5a5d5d" stroke-width="7"/>
+    <g>
+      <ellipse cx="285" cy="183" rx="38" ry="38" fill="#080808" stroke="#4a4a48" stroke-width="8"/>
+      <rect x="267" y="72" width="36" height="146" rx="18" fill="url(#gold)" stroke="#4e390b" stroke-width="6"/>
+      <ellipse cx="430" cy="183" rx="38" ry="38" fill="#080808" stroke="#4a4a48" stroke-width="8"/>
+      <rect x="412" y="72" width="36" height="146" rx="18" fill="url(#gold)" stroke="#4e390b" stroke-width="6"/>
+      <ellipse cx="575" cy="183" rx="38" ry="38" fill="#080808" stroke="#4a4a48" stroke-width="8"/>
+      <rect x="557" y="72" width="36" height="146" rx="18" fill="url(#gold)" stroke="#4e390b" stroke-width="6"/>
+    </g>
+    <rect x="675" y="246" width="55" height="55" rx="10" fill="#ffc245" stroke="#0c0c0c" stroke-width="4"/>
+    <rect x="746" y="246" width="55" height="55" rx="10" fill="#ff4e43" stroke="#0c0c0c" stroke-width="4"/>
+    <g fill="url(#green)" stroke="#080c07" stroke-width="4">
+      <rect x="250" y="414" width="52" height="52" rx="10"/><rect x="342" y="425" width="198" height="28" rx="8"/>
+      <rect x="250" y="524" width="52" height="52" rx="10"/><rect x="342" y="535" width="158" height="28" rx="8"/>
+      <rect x="250" y="634" width="52" height="52" rx="10"/><rect x="342" y="645" width="113" height="28" rx="8"/>
+    </g>
+  </g>
+</svg>
